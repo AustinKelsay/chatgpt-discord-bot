@@ -31,10 +31,13 @@ async def on_message(message):
     # make sure the message is not a command
     if message.content.startswith("!"):
         return
-    answer = codex.ask(message.content)
+    # If someone @'s the bot in the ai_help channel, send a message
+    if message.channel.id == 8675309:
+        if client.user.mentioned_in(message):
+            answer = codex.ask(message.content)
 
-    if answer:
-        await message.channel.send(answer)
+            if answer:
+                await message.channel.send(answer)
 
 
 client.run(BOT_TOKEN)
